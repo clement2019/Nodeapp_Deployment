@@ -1,4 +1,4 @@
-## Project name: Nodeapp Deployment projects
+### Project name: Nodeapp Deployment Projects
 
 A Dockerised React application build into a container and pushed into Docker Hub, created the index.js file
 as landing page an server test page,to check if the server is litening at port:3000 as specified,
@@ -7,33 +7,33 @@ as landing page an server test page,to check if the server is litening at port:3
 •	Cloud: Accessing computer and information technology resources through the Internet.
 •	Container Orchestration: Automating the deployment, scaling and management of containerized applications.
 
-#	Create an environment variable for your docker username
-
+  #####  Prerequisites:
   $ export docker_username="MY_DOCKER_USERNAME"
 
-2. Run the application
-1.	Install Node.js
-2.	Run the following commands in a terminal:
+  install GIt
+  install Node.js
+  install npm     $npm install
+  install Express.js $install npm express --save
+   Install Node.js
+   install kubernetstes cluster minikube or AWs EKS
+   install kubeconfig
+   install kubectl CLI (command line inerface)
+   install helm
+  Run the following commands in a terminal:
 
-# Run the application using Docker
- 1.	Build the image
-2.	Run the image
-3.	
- # Prerequisites:
+  Create Docker account
 
-  1.	Create Docker account
+  Install Docker CLI or Docker deckstop
 
-3.	Install Docker CLI
+  Retrieve and save your Dockerhub user id
 
-5.	Retrieve and save your Docker user id
+  Build the image
 
-7. Build the image
-
-# In a terminal, run:
+ #####  In a terminal, run:
 
 $ docker build -t $docker_username/deploy-react-kubernetes .
 
-# your image should be listed by running:
+ #####  your image should be listed by running:
 
 $ docker images
 
@@ -41,11 +41,11 @@ $ docker images
 
 $ node index.js 
 
-# Now inside the dockerfile created
+# ##### Now inside the dockerfile created
 
 CMD ["node","index.js"]
 
-# Creating the Dockerfile
+ #####  Creating the Dockerfile
 Created Dockerfile as shown in the repo, this will help in building Docker image for the application .
 
 However using base image node:current-alpine beacuse its very light weight to reduce the size of the final docker
@@ -60,11 +60,11 @@ that are not not neccessary to be inside the container image placed such files i
 
 .gitignore,
 
- ## Dockerfile
+  #####  Dockerfile
 
 
 
-# Built the image  and running the neccessary commands
+ #####  Built the image  and running the neccessary commands
 
  $ docker build -t ggood777lord/nodeimage .
  
@@ -72,24 +72,24 @@ that are not not neccessary to be inside the container image placed such files i
   $ docker images once the docker image was built then run the container exposed at port:3000
 
    tested'
-# run the the container 
+ #####  run the the container 
 
  $ docker run -d -p  3000:3000 good777lord/nodeimage:latest
 
-# check for all conatiner both runnin gand not running
+ #####  check for all conatiner both runnin gand not running
 
  $ docker ps -a
-# now login into docker preparatry to pushing the image into Dockerhub
+ #####  now login into docker preparatry to pushing the image into Dockerhub
  $ docker login
 
- # Now push the image into Dockerhub
+  #####  Now push the image into Dockerhub
  $ docker image push good777lord/nodeimage:latest
 
- # Now stop and remove the container prepratory to deploying the application into kubernetes cluster
+  #####  Now stop and remove the container prepratory to deploying the application into kubernetes cluster
   $docker stop <cimageconatinerID>
  $ docker rm <cimageconatinerID>
 
-# Creating the deployment object by creating a kubernetes folder in the root directory
+ #####  Creating the deployment object by creating a kubernetes folder in the root directory
  $ touch mkdir kubernetes
 
  $ cd kubernetes && touch deployment.yml && service.yml
@@ -168,7 +168,7 @@ spec:
     
     nodePort: 31110
 
-# make sure your cluster is running in this case minikube for low production
+ #####  make sure your cluster is running in this case minikube for low production
 $ minikube start
 
 $ minikube status
@@ -180,17 +180,17 @@ kubelet: Running
 apiserver: Running
 kubeconfig: Configured
 
-# Now check if you have any poas running using the kubectl cli commands
+ #####  Now check if you have any poas running using the kubectl cli commands
  $kubectl get pods
-# delete any pods not usefull but still running
+ #####  delete any pods not usefull but still running
  $ kubectl delete <podname>
 
- # now check again if all those pods are deleted  and gone
+  #####  now check again if all those pods are deleted  and gone
   $ kubectl get po
-# Run the following command to remove the container forcefully: 
+ #####  Run the following command to remove the container forcefully: 
   $docker rm -f < Container_ID>
 
-# Now create your pods and deployment objects
+ #####  Now create your pods and deployment objects
 
 $ kubectl apply -f deployment.yml
 
@@ -200,7 +200,7 @@ $ kubectl get nodes
 
 $ kubectl get deployments
 
- # Creating the service for the application
+  #####  Creating the service for the application
 
 I needed to be able to access the application at port:3000 inside the container
 
@@ -219,7 +219,7 @@ $ kubectl get svc
 $ kubectl describe service good777lord/nodeimage
 
 $ kubectl get svc
-# Now to run the application externall using loadbalancer by running e command  below
+ #####  Now to run the application externall using loadbalancer by running e command  below
  $ minikube service <podservicename>
 
  ╭──────────────────────────────────────────────────────────────────────────────────────────────────────────╮
@@ -242,72 +242,72 @@ $ kubectl get svc
 |-----------|----------------------------|-------------|------------------------|
 
 
-# Now that the application is runing lets now create the helm charts objects to mamange our kubernetes files 
-# first make sure your cluster is running and docker
+ Now that the application is runing lets now create the helm charts objects to mamange our kubernetes files 
+ #####  first make sure your cluster is running and docker
 $ minikube status
 $minikube start
 
-# check your ckuster information 
+ #####  check your ckuster information 
  $kubectl cluster-info
 
-# to get more details run the command below
+ #####  to get more details run the command below
  $kubectl cluster-info dump
 
- # Now once done please delete all deployment and service objects that exist in the kubernetses directory where you have been working by runni g this command
+  #####  Now once done please delete all deployment and service objects that exist in the kubernetses directory where you have been working by runni g this command
 
  $ kubectl delete -f .
 
- # Now lets create our helm charts templates but make sure helm is installed
+  #####  Now lets create our helm charts templates but make sure helm is installed
 
  $ helm version
  version.BuildInfo{Version:"v3.12.1", GitCommit:"f32a527a060157990e2aa86bf45010dfb3cc8b8d", GitTreeState:"clean", GoVersion:"go1.20.4"}
- # create the helm template now
+  #####  create the helm template now
 
  $ helm create nodeapplication
 
- # This automatically craetes all the helm templates to be used , you can remove the ones not needed
+  #####  This automatically craetes all the helm templates to be used , you can remove the ones not needed
 
  Now inside the nodeapplication folder there is a chart directory (folder) delete it and inside the template folder there is a test directory(folder) delete it, Also hpa.yml ,ingress.yml and serviceaccount.yml delete them all you dont need for now.
 
  So you only need for now the deployment.yaml, NOTES.txt, values.yaml,service.yaml,chart.yaml
 
- # inside the 
+  #####  inside the 
 ./template/values.yaml
-# under 
+ #####  under 
 repository: nodeapplication
 
 service:
  tyepe: NodePort
 
-# and
+ #####  and
 tag: "latest"
 
-# How go to 
+ #####  How go to 
 
  ./template/dployement.yaml 
 under spec:
-# remove the flowing
+ #####  remove the flowing
 {{- if not .Values.autonscalling.enabled }}
 
 {{end}}
 
  under template:
   metadata:
- # remove the flowing
+  #####  remove the flowing
    {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
 
   under spec:
-  # remove the folowing 
+   #####  remove the folowing 
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
 
    uder spec:
-  # remove also 
+   #####  remove also 
       serviceAccountName: {{ include "nodeapplication.serviceAccountName" . }}
 
       securityContext:
@@ -315,16 +315,16 @@ under spec:
 
   uder spec:
     under containers: 
-  # remove also  
+   #####  remove also  
    securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
 
   under ports:
-  # change the containerPort:
+   #####  change the containerPort:
             - name: http
               containerPort: {{ .Values.service.targetport }} 
 
-  # Go to values.yaml file and add another port called target  sand map to port 3000
+   #####  Go to values.yaml file and add another port called target  sand map to port 3000
   service:
   type: nodePort
   port: 80
@@ -337,7 +337,7 @@ under spec:
             - name: http
               containerPort: {{ .Values.service.targetport}}
 
- # Now inside the deployment.yaml file remove all below
+  #####  Now inside the deployment.yaml file remove all below
 
  livenessProbe:
             httpGet:
@@ -362,10 +362,10 @@ under spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
              
-  # we shall render the helm by running bthe below command  
+   #####  we shall render the helm by running bthe below command  
 
   $helm template nodeapplication   
-# Source: nodeapplication/templates/service.yaml
+ #####  Source: nodeapplication/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -388,9 +388,18 @@ spec:
     app.kubernetes.io/instance: release-name
 ---
 
-  # Now release the application
+   #####  Now release the application
 
-  $helm install nodeapplication    
+  $helm install web nodeapplication  
+
+
+   ##### check your helm release
+  $helm list
+
+  #####  uninstall your release
+  $ helm uninstall web  
+
+  #### now push your files to git repository
                        
 
 
